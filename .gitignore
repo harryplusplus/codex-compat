@@ -31,6 +31,8 @@ go.work.sum
 # .idea/
 .vscode/
 
-# Bins
+# Binaries
 /goblin
-/respond
+
+# Temporary files
+/tmp/
