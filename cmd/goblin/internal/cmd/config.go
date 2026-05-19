@@ -19,7 +19,7 @@ func getLogLevel() string {
 	return viper.GetString("log_level")
 }
 
-func getTitleModel() string { //nolint:unused
+func getTitleModel() string {
 	return viper.GetString("title_model")
 }
 
@@ -47,7 +47,7 @@ func getModelConfig(modelID string) ModelConfig { //nolint:unused
 	return cfg
 }
 
-func getAllModelConfigs() map[string]ModelConfig { //nolint:unused
+func getAllModelConfigs() map[string]ModelConfig {
 	var models map[string]ModelConfig
 	if err := viper.UnmarshalKey("models", &models); err != nil {
 		return nil
