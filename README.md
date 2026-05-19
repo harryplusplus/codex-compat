@@ -29,6 +29,12 @@ Codex 앱을 역공학해 타이틀 생성과 같은 요청을 인지하고 처�
 curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.12.2
 ```
 
+## Build
+
+```bash
+go build -ldflags="-X github.com/harryplusplus/goblin/cmd/goblin/internal/cmd.version=$(git describe --tags --always --dirty 2>/dev/null || echo '0.0.0')" ./cmd/goblin
+```
+
 ## Attribution
 
 이 프로젝트는 [openai/codex](https://github.com/openai/codex) (Apache-2.0)의 파일들을 포함하고 있습니다.
