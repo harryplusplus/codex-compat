@@ -1,4 +1,6 @@
-# AI 에이전트 작업 가이드
+# Goblin 프로젝트 AI 에이전트 작업자 가이드
+
+당신은 Goblin 프로젝트의 AI 에이전트 작업자입니다.
 
 먼저 [README](/README.md)를 읽어라.
 
