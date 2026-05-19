@@ -1,42 +1,12 @@
 # Goblin 프로젝트 AI 에이전트 작업자 가이드
 
 당신은 Goblin 프로젝트의 AI 에이전트 작업자입니다.
-
-먼저 [README](/README.md)를 읽어라.
-
-## 개발 환경
-
-이 프로젝트는 Go 언어 프로젝트다.
-Go 명령줄 인터페이스는 구성되어 있다.
+먼저 프로젝트의 목적을 파악하기 위해서 [README](/README.md)를 읽으세요.
+이 프로젝트는 Go 언어로 작성한 CLI 서버입니다.
+Go 명령줄 인터페이스는 구성되어 있습니다.
 
 ## 작업 가이드라인
 
-- 현재 요구사항 외 다른 경우의 수를 고려하지 마라. **YAGNI**해라.
-- 기능 명세가 모호하거나 지시가 이해가 안되면 사용자한테 물어봐라.
-- 구현 전 테스트부터 작성해라. **TDD(Red, Green, Refactor)**해라.
-- `panic`을 쓰지 마라. 일반 비즈니스 로직은 `error` 반환 체인으로 처리해라. `panic`은 `init`이나 할당이 실패할 수 없는 리소스 초기화 등 회복 불가능한 상황에서만 허용한다.
-- 작업 시 shim/glue 코드로 기존 이름을 유지하지 말고 연결된 모든 참조를 직접 수정해라.
-  `rg`로 영향 범위부터 파악하고, 함수/필드/테스트 할 것 없이 하나를 바꾸면 의존하는 모든 것을 함께 바꿔라.
-  예: `var oldName = newName` 금지, `import oldname "new/pkg"` 금지.
-- 주석은 코드만으로 알 수 없는 맥락만 적어라.
-  - 나쁨: `// http 요청을 보냄` → 함수명 `sendRequest()`가 이미 설명
-  - 나쁨: `// 응답 검증` → 아래 assert가 이미 검증
-  - 좋음: `// -ldflags로 빌드 시 주입` → 코드만으로 알 방법 없음
-  - 좋음: `// API 키는 response body가 아닌 header로 전달` → 문서화되지 않은 동작
-  - 좋음: `// name 필드는 codex validation에서 필수` — codex 외부 라이브러리 제약
-- 함수/변수 위 doc string 금지. 함수명이 설명을 대신해야 한다.
-- `//`, `// TODO`, `// NOTE` 모두 동일 기준 적용.
-- 커밋 메시지는 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) 스펙을 따라라.
-- Go 파일 수정 후 `golangci-lint fmt && golangci-lint run`을 실행해라.
-- 작업 완료 후 이 가이드라인을 모두 지켰는지 다시 확인하고 어긴 부분이 있으면 고쳐라.
-
-## 통합 테스트
-
-```bash
-GOBLIN_INTEGRATION=1 go test ./test/integration/ -v -count=1 -parallel=1 -timeout=15m
-```
-
-- `GOBLIN_INTEGRATION=1` 환경변수로 통합 테스트 활성화
-- `CROF_API_KEY` 환경변수가 미리 설정되어 있어야 함 (provider: `crof`, model: `kimi-k2.6-precision`)
-- `codex` 바이너리가 `$PATH`에 있어야 함
-- `GOBLIN_INTEGRATION` 없이 `go test ./...` 실행 시 통합 테스트는 자동 Skip
+- Go 파일 수정 후 `golangci-lint fmt && golangci-lint run`을 실행하세요.
+- 커밋 메시지는 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)를 따르세요.
+- 스타일은 [Google Go Style Guide](https://google.github.io/styleguide/go/)를 따르세요.
