@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
@@ -27,18 +27,25 @@ func init() {
 }
 
 func runServe() error {
+	host := getServerHost()
 	port := getServerPort()
 	logLevel := getLogLevel()
+
+	var level slog.Level
+	if err := level.UnmarshalText([]byte(logLevel)); err != nil {
+		return fmt.Errorf("invalid log_level %q: %w", logLevel, err)
+	}
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: level})))
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		if _, err := fmt.Fprint(w, `{"status":"ok"}`); err != nil {
-			log.Printf("health check write error: %v", err)
+			slog.Error("health check write error", "err", err)
 		}
 	})
 
-	addr := fmt.Sprintf(":%d", port)
-	fmt.Fprintf(os.Stderr, "goblin server listening on %s (log level: %s)\n", addr, logLevel)
+	addr := fmt.Sprintf("%s:%d", host, port)
+	slog.Info("server starting", "addr", addr, "log_level", logLevel)
 	return http.ListenAndServe(addr, mux)
 }
